@@ -23,3 +23,51 @@ Inspired from _Li et. al. (2013)_ but extended to multivariate time series. The 
 ---
 
 ## Examples
+
+**Processing the data**:
+
+```python
+df = pd.read_csv('your_data.csv')
+gimts = GIMTS(df, w=3, a=4, n=100, k=10)
+gimts.process()
+```
+
+The `gimts.sax` object contains results from the different steps of the SAX algorithm and the various SAX parameters:
+
+- `gimts.sax.df_INT` returns the dataframe after the normalization step.
+- `gimts.sax.df_PAA` returns the dataframe after the PAA step.
+- `gimts.sax.df_SAX` returns the dataframe after the discretization step.
+- `gimts.sax.w` returns the number of segments in the PAA - and SAX - representation (after the dimensionality reduction).
+- `gimts.sax.a` returns the number of symbols in the alphabet.
+- `gimts.sax.alphabet` returns the different symbols in the alphabet (determined by parameter _a_).
+- `gimts.sax.breakpoints` returns the values of the different breakpoints computed to discretize the time series.
+
+The `gimts.gi` object contains results from the _M-Repair_ algorithm. For easier access, the rule and the 'RePair-ed' phrases can be found through `gimts.rules`, `gimts.phrases` and `gimts.ranked_rules`.
+
+**Visualizing the results**:
+
+- 'RePair-ed' Phrases
+
+  ```python
+  gimts.show_phrases()
+  ```
+
+- Grammar rules
+
+  ```python
+  gimts.show_rules(ordered=False)
+  ```
+
+- Sorted grammar rules
+
+  ```python
+  gimts.show_rules(ordered=True)
+  ```
+
+- Motifs
+
+  ```python
+  gimts.show_motifs(i_rule=14)
+  ```
+
+Where _i_rule_ is the index of the rule in the corresponding `gi.ranked_rules` DataFrame.
